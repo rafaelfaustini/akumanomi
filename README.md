@@ -36,6 +36,7 @@ Unfortunately, the esper permission and the **Mera Mera no Mi** aren't linked ye
 
 ## To Do
 
+- Configuration file for multilanguage item's lore and messages (The plugin will have the messages by default in english but as soon as the configuration is created I will provide the Brazilian Portuguese translation)
 - Link **Mera Mera no Mi** with Esper permission (or use an .ini/sql to store the uuid of the espers)
 - Make the effects of the fruit persistant even after relog or server shutdown
 - Add various habilities per Akuma no Mi, working like 'spells'
