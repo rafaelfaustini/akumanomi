@@ -36,6 +36,7 @@ Infelizmente, a permissão de Esper e a **Mera Mera no Mi** não estão conectad
 
 ## A fazer
 
+- Arquivo de configuração para lore de items e mensagens em multiplos idiomas (O plugin terá as messagens por padrão em ingles mas assim que as configurações forem criadas, eu disponibilizarei a tradução para português do Brasil)
 - Conectar **Mera Mera no Mi** com a permissão de Esper (ou usar um .ini/sql para armazenar os uuid dos espers)
 - Fazer os efeitos da fruta serem persistentes após relogar ou desligamento de servidor
 - Adicionar habilidades variadas por Akuma no Mi, funcionando como 'feitiços'
