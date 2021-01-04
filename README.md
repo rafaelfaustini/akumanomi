@@ -23,9 +23,21 @@
     ·
   </p>
 
-
 ## Usage
-At the moment, the plugin has one command `/meramera` that gives you the **Mera Mera no Mi** fruit, when eaten it gives you unlimited fire resistance. 
-Players with the permissions `akumanomi.Esper` won't be able to swim, they get slow, weakness, hunger and get pushed to the bottom of the ocean. 
+
+At the moment, the plugin has one command `/meramera` that gives you the **Mera Mera no Mi** fruit, when eaten it gives you unlimited fire resistance.
+Players with the permissions `akumanomi.Esper` won't be able to swim, they get slow, weakness, hunger and get pushed to the bottom of the ocean.
 
 Unfortunately, the esper permission and the **Mera Mera no Mi** aren't linked yet, meaning that eating the **Mera Mera no Mi** fruit doesn't turn you into an Esper automatically, at the moment you need to set the permission manually.
+
+## Permissions
+
+`akumanomi.Esper` - Makes the user not able to swim
+
+## To Do
+
+- Link **Mera Mera no Mi** with Esper permission (or use an .ini/sql to store the uuid of the espers)
+- Make the effects of the fruit persistant even after relog or server shutdown
+- Add various habilities per Akuma no Mi, working like 'spells'
+- Cancel any damage of Logia without the use of haki (Not sure if the events code behaviour will let it)
+- Add haki habilities (Observation, Armament, Conquerors)
