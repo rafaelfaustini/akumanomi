@@ -1,6 +1,7 @@
 package br.com.rafaelfaustini.akumanomi.commands;
 
 import br.com.rafaelfaustini.akumanomi.AkumaNoMi;
+import br.com.rafaelfaustini.akumanomi.Esper;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -28,8 +29,8 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
                 if(sender instanceof Player) {
                     ItemStack fruit = new ItemStack(Material.BEETROOT);
                     ItemMeta fruitMeta = fruit.getItemMeta();
-                    fruitMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.fileConfig.get("meramera.name").toString()));
-                    fruitMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.fileConfig.get("meramera.onEat").toString())));
+                    fruitMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.getConfig().get("meramera.name").toString()));
+                    fruitMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.getConfig().get("meramera.description").toString())));
                     fruit.setItemMeta(fruitMeta);
                     player.getInventory().addItem(fruit);
                 }
@@ -55,10 +56,11 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
             p.sendMessage(ChatColor.RED+"You feel your stomach burning");
             p.getWorld().spawnParticle(Particle.SMOKE_LARGE, p.getLocation(), 100);
             p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 3));
-            List<String> espers = plugin.getConfig().getStringList("espers");
-            espers.add(p.getUniqueId().toString());
-            plugin.getConfig().set("espers", espers);
-            plugin.saveConfig();
+
+            List<String> espers = plugin.espers.getConfig().getStringList("espers");
+            if(Esper.isEsper(p)) {
+                Esper.setEsper(p);
+            }
         }
     }
 }

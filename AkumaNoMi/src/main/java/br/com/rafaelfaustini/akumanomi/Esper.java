@@ -11,9 +11,13 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public class Esper implements Listener {
-
-    public Boolean isEsper(Player player){
-        return player.hasPermission("akumanomi.Esper");
+    public static Boolean isEsper(Player player){
+        AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
+        return  plugin.getConfig().getList("esper").contains(player.getUniqueId());
+    }
+    public static void setEsper(Player player){
+        AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
+        plugin.espers.set("espers", player.getUniqueId().toString());
     }
     @EventHandler
     public void onMove(PlayerMoveEvent event){

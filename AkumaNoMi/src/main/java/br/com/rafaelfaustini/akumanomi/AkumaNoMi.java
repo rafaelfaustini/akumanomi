@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public final class AkumaNoMi extends JavaPlugin{
     public CustomConfig messagesConfig;
+    public CustomConfig espers;
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -18,6 +19,7 @@ public final class AkumaNoMi extends JavaPlugin{
         saveDefaultConfig();
         String locale = getConfig().getString("locale");
         this.messagesConfig = new CustomConfig(String.format("messages_%s.yml", locale));
+        this.espers = new CustomConfig("espers.yml");
 
         getServer().getPluginManager().registerEvents(new Esper(), this);
         getServer().getPluginManager().registerEvents(new MeraMeraNoMi(), this);

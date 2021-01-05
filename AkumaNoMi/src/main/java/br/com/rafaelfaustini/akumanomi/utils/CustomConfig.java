@@ -11,17 +11,38 @@ import java.io.IOException;
 
 public class CustomConfig {
     private File file;
-    public FileConfiguration fileConfig;
+    private FileConfiguration fileConfig;
 
     public CustomConfig(String name){
-        createMessagesConfig(name);
+        createConfig(name);
     }
 
     public FileConfiguration getConfig(){
         return fileConfig;
     }
 
-    private void createMessagesConfig(String name) {
+    public void save(){
+        try {
+            fileConfig.save(file);
+        } catch (IOException e){
+            System.out.println("[AkumaNoMi] Failed to save file");
+        }
+    }
+
+    public void reload(){
+        fileConfig = YamlConfiguration.loadConfiguration(file);
+    }
+
+    public void set(String section, Object value){
+        try {
+            fileConfig.set(section, value);
+            fileConfig.save(file);
+        } catch (IOException e){
+            System.out.println("[AkumaNoMi] Failed to save file");
+        }
+    }
+
+    private void createConfig(String name) {
         Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("AkumaNoMi");
         file = new File(plugin.getDataFolder(), name);
         if (!file.exists()) {
@@ -37,4 +58,6 @@ public class CustomConfig {
             System.out.println("[AkumaNoMi] Error: "+e);
         }
     }
+
+
 }
