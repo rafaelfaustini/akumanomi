@@ -17,6 +17,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 public class MeraMeraNoMi implements CommandExecutor, Listener {
@@ -27,8 +28,8 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
                 if(sender instanceof Player) {
                     ItemStack fruit = new ItemStack(Material.BEETROOT);
                     ItemMeta fruitMeta = fruit.getItemMeta();
-                    fruitMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.get("meramera.name").toString()));
-                    fruitMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.get("meramera.onEat").toString())));
+                    fruitMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.fileConfig.get("meramera.name").toString()));
+                    fruitMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.fileConfig.get("meramera.onEat").toString())));
                     fruit.setItemMeta(fruitMeta);
                     player.getInventory().addItem(fruit);
                 }
@@ -36,7 +37,7 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
     }
 
     private boolean isMeraMera(ItemStack item){
-        String itemName = plugin.messagesConfig.get("meramera.name").toString();
+        String itemName = plugin.messagesConfig.getConfig().get("meramera.name").toString();
         boolean checkName =  ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', itemName)).equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&',ChatColor.stripColor(item.getItemMeta().getDisplayName())));
         boolean checkColor = item.getItemMeta().getDisplayName().length() == (itemName).length();
 
@@ -54,7 +55,10 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
             p.sendMessage(ChatColor.RED+"You feel your stomach burning");
             p.getWorld().spawnParticle(Particle.SMOKE_LARGE, p.getLocation(), 100);
             p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 3));
-
+            List<String> espers = plugin.getConfig().getStringList("espers");
+            espers.add(p.getUniqueId().toString());
+            plugin.getConfig().set("espers", espers);
+            plugin.saveConfig();
         }
     }
 }
