@@ -10,8 +10,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import java.security.Permission;
-
 public class Esper implements Listener {
 
     public Boolean isEsper(Player player){

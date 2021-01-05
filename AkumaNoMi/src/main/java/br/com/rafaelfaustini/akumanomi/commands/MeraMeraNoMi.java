@@ -1,5 +1,6 @@
 package br.com.rafaelfaustini.akumanomi.commands;
 
+import br.com.rafaelfaustini.akumanomi.AkumaNoMi;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -10,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -18,26 +18,28 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
 
-public class MeraMeraNoMi implements CommandExecutor, Listener {
 
+public class MeraMeraNoMi implements CommandExecutor, Listener {
+    AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
                 Player player = (Player) sender;
                 if(sender instanceof Player) {
                     ItemStack fruit = new ItemStack(Material.BEETROOT);
                     ItemMeta fruitMeta = fruit.getItemMeta();
-                    fruitMeta.setDisplayName(ChatColor.RED + "Mera Mera No Mi");
-                    fruitMeta.setLore(Arrays.asList(ChatColor.RED + "Burns as fire"));
+                    fruitMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.get("meramera.name").toString()));
+                    fruitMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.get("meramera.onEat").toString())));
                     fruit.setItemMeta(fruitMeta);
-
                     player.getInventory().addItem(fruit);
                 }
                 return false;
     }
 
     private boolean isMeraMera(ItemStack item){
-        boolean checkName = "Mera Mera No Mi".equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&',ChatColor.stripColor(item.getItemMeta().getDisplayName())));
-        boolean checkColor = item.getItemMeta().getDisplayName().length() == (ChatColor.RED + "Mera Mera No Mi").length();
+        String itemName = plugin.messagesConfig.get("meramera.name").toString();
+        boolean checkName =  ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', itemName)).equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&',ChatColor.stripColor(item.getItemMeta().getDisplayName())));
+        boolean checkColor = item.getItemMeta().getDisplayName().length() == (itemName).length();
+
         if(item.getType() == Material.BEETROOT && checkName && checkColor){
             return true;
         }
