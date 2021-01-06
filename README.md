@@ -28,8 +28,6 @@
 At the moment, the plugin has one command `/meramera` that gives you the **Mera Mera no Mi** fruit, when eaten it gives you unlimited fire resistance.
 Players with the permissions `akumanomi.Esper` won't be able to swim, they get slow, weakness, hunger and get pushed to the bottom of the ocean.
 
-Unfortunately, the esper permission and the **Mera Mera no Mi** aren't linked yet, meaning that eating the **Mera Mera no Mi** fruit doesn't turn you into an Esper automatically, at the moment you need to set the permission manually.
-
 ## To Do
 
 - ~~Configuration file for multilanguage item's lore and messages (The plugin will have the messages by default in english but as soon as the configuration is created I will provide the Brazilian Portuguese translation)~~
