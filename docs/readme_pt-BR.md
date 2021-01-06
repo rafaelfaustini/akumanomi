@@ -28,12 +28,6 @@
 No momento, o plugin possui um command `/meramera` que lhe dar a fruta **Mera Mera no Mi**, quando comida você recebe resistência ao fogo infinita.
 Jogadores com a permissão `akumanomi.Esper` não poderão nadar, ficarão lentos, fracos, famintos e serão puxados para o fundo do oceano.
 
-Infelizmente, a permissão de Esper e a **Mera Mera no Mi** não estão conectados ainda, significando que se você comer a fruta **Mera Mera no Mi** não te torna um Esper automaticamente, no momento você precisa definir a permissão manualmente.
-
-## Permissões
-
-`akumanomi.Esper` - Faz com que o usuário não possa mais nadar
-
 ## A fazer
 
 - ~~Arquivo de configuração para lore de items e mensagens em multiplos idiomas (O plugin terá as messagens por padrão em ingles mas assim que as configurações forem criadas, eu disponibilizarei a tradução para português do Brasil)~~
