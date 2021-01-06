@@ -1,5 +1,7 @@
 package br.com.rafaelfaustini.akumanomi;
 
+import br.com.rafaelfaustini.akumanomi.utils.Utils;
+import com.sun.org.apache.xerces.internal.xs.StringList;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -10,14 +12,21 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import java.util.List;
+
 public class Esper implements Listener {
     public static Boolean isEsper(Player player){
         AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
-        return  plugin.getConfig().getList("esper").contains(player.getUniqueId());
+        List<String> espers = plugin.espers.getConfig().getStringList("espers");
+
+        return espers.contains(player.getUniqueId().toString());
     }
+
     public static void setEsper(Player player){
         AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
-        plugin.espers.set("espers", player.getUniqueId().toString());
+        List<String> espers = plugin.espers.getConfig().getStringList("espers");
+        espers.add(player.getUniqueId().toString());
+        plugin.espers.set("espers", espers);
     }
     @EventHandler
     public void onMove(PlayerMoveEvent event){
