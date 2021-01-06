@@ -53,7 +53,7 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
         Player p = e.getPlayer();
         if(isMeraMera(e.getItem())){
             p.setFireTicks(50);
-        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.getConfig().getString("onEat")));
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.getConfig().getString("onEat")));
             p.getWorld().spawnParticle(Particle.SMOKE_LARGE, p.getLocation(), 100);
             p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 3));
 
