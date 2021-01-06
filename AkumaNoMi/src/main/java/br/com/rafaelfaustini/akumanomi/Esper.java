@@ -22,15 +22,16 @@ public class Esper implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent event){
         Player player = (Player) event.getPlayer();
-        if(isEsper(player)) {
             if (player.getLocation().getBlock().getType() == Material.WATER && player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WATER) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 3));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10000, 7));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 10000, 14));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 1000, 7));
+                if(isEsper(player)) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 3));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10000, 7));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 10000, 14));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 1000, 7));
 
-                Vector vector = new Vector(0, -1, 0);
-                player.setVelocity(vector.multiply(1));
+                    Vector vector = new Vector(0, -1, 0);
+                    player.setVelocity(vector.multiply(1));
+                }
             }
         }
     }

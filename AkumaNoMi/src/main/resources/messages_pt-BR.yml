@@ -1,3 +1,4 @@
 meramera:
     name: "&cMera Mera no Mi"
     description: "&4Arde como fogo"
+    onEat: "&cVocê sente seu estômago queimar"
