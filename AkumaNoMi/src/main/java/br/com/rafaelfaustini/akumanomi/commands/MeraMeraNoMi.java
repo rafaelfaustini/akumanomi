@@ -1,6 +1,8 @@
 package br.com.rafaelfaustini.akumanomi.commands;
 
 import br.com.rafaelfaustini.akumanomi.AkumaNoMi;
+import br.com.rafaelfaustini.akumanomi.Esper;
+import br.com.rafaelfaustini.akumanomi.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -17,6 +19,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
+import java.util.List;
+
+
+import static br.com.rafaelfaustini.akumanomi.utils.Utils.MessageText;
 
 
 public class MeraMeraNoMi implements CommandExecutor, Listener {
@@ -27,8 +33,8 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
                 if(sender instanceof Player) {
                     ItemStack fruit = new ItemStack(Material.BEETROOT);
                     ItemMeta fruitMeta = fruit.getItemMeta();
-                    fruitMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.get("meramera.name").toString()));
-                    fruitMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.get("meramera.onEat").toString())));
+                    fruitMeta.setDisplayName(MessageText(plugin.messagesConfig.getConfig().get("meramera.name").toString()));
+                    fruitMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.getConfig().get("meramera.description").toString())));
                     fruit.setItemMeta(fruitMeta);
                     player.getInventory().addItem(fruit);
                 }
@@ -36,7 +42,7 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
     }
 
     private boolean isMeraMera(ItemStack item){
-        String itemName = plugin.messagesConfig.get("meramera.name").toString();
+        String itemName = plugin.messagesConfig.getConfig().get("meramera.name").toString();
         boolean checkName =  ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', itemName)).equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&',ChatColor.stripColor(item.getItemMeta().getDisplayName())));
         boolean checkColor = item.getItemMeta().getDisplayName().length() == (itemName).length();
 
@@ -50,11 +56,18 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
     public void onItemConsume(PlayerItemConsumeEvent e) {
         Player p = e.getPlayer();
         if(isMeraMera(e.getItem())){
-            p.setFireTicks(50);
-            p.sendMessage(ChatColor.RED+"You feel your stomach burning");
-            p.getWorld().spawnParticle(Particle.SMOKE_LARGE, p.getLocation(), 100);
-            p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 3));
 
+            List<String> espers = plugin.espers.getConfig().getStringList("espers");
+            if(!Esper.isEsper(p)) {
+                p.setFireTicks(50);
+                p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("meramera.onEat").toString()));
+                p.getWorld().spawnParticle(Particle.SMOKE_LARGE, p.getLocation(), 100);
+                p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 3));
+                Esper.setEsper(p);
+            } else {
+                p.sendMessage(MessageText(plugin.messagesConfig.getConfig().getString("akumanomi.eatTwice")));
+                p.getWorld().createExplosion(p.getLocation(), 10);
+            }
         }
     }
 }

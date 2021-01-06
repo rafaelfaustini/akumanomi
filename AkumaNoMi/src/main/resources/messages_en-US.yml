@@ -1,3 +1,6 @@
+akumanomi:
+    eatTwice: "&l&6Will your body resist so much power ?"
 meramera:
     name: "&cMera Mera no Mi"
-    onEat: "&4Burns as fire"
+    description: "&4Burns as fire"
+    onEat: "&cYou feel your stomach burn"

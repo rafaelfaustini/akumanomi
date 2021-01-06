@@ -1,5 +1,6 @@
 package br.com.rafaelfaustini.akumanomi;
 import br.com.rafaelfaustini.akumanomi.commands.MeraMeraNoMi;
+import br.com.rafaelfaustini.akumanomi.utils.CustomConfig;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -9,14 +10,17 @@ import java.io.File;
 import java.io.IOException;
 
 public final class AkumaNoMi extends JavaPlugin{
-    public FileConfiguration messagesConfig;
+    public CustomConfig messagesConfig;
+    public CustomConfig espers;
     @Override
     public void onEnable() {
         // Plugin startup logic
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         String locale = getConfig().getString("locale");
-        this.messagesConfig = this.createMessagesConfig(String.format("messages_%s.yml", locale));
+        this.messagesConfig = new CustomConfig(String.format("messages_%s.yml", locale));
+        this.espers = new CustomConfig("espers.yml");
+
         getServer().getPluginManager().registerEvents(new Esper(), this);
         getServer().getPluginManager().registerEvents(new MeraMeraNoMi(), this);
         getCommand("MeraMeraNoMi").setExecutor(new MeraMeraNoMi());
@@ -28,21 +32,4 @@ public final class AkumaNoMi extends JavaPlugin{
         // Plugin shutdown logic
     }
 
-    private FileConfiguration createMessagesConfig(String name) {
-        File messagesConfigFile;
-        messagesConfigFile = new File(getDataFolder(), name);
-        if (!messagesConfigFile.exists()) {
-            messagesConfigFile.getParentFile().mkdirs();
-            saveResource(name, false);
-        }
-
-        FileConfiguration messagesConfigTmp = new YamlConfiguration();
-        try {
-            messagesConfigTmp.load(messagesConfigFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-            System.out.println("[AkumaNoMi] Error: "+e);
-        }
-        return messagesConfigTmp;
-    }
 }
