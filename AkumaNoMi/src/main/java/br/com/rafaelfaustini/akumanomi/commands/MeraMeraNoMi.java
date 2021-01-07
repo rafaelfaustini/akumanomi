@@ -11,11 +11,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -31,6 +33,7 @@ import java.util.List;
 
 
 import static br.com.rafaelfaustini.akumanomi.utils.Utils.MessageText;
+import static br.com.rafaelfaustini.akumanomi.utils.Utils.rollD;
 
 
 public class MeraMeraNoMi implements CommandExecutor, Listener {
@@ -74,6 +77,19 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
 
     private void passiveBuff(Player player){
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 3));
+    }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent e) {
+        if(e.getEntity().getType() == EntityType.PLAYER){
+            Player p = (Player) e.getEntity();
+            if(isMeraMera(p)) {
+                if(rollD(10)){
+                    e.setCancelled(true); // Rolls D10
+                    p.spawnParticle(Particle.FLAME, p.getLocation(), 5000);
+                }
+            }
+        }
     }
 
     @EventHandler
