@@ -3,6 +3,7 @@ package br.com.rafaelfaustini.akumanomi.commands;
 import br.com.rafaelfaustini.akumanomi.AkumaNoMi;
 import br.com.rafaelfaustini.akumanomi.Esper;
 import br.com.rafaelfaustini.akumanomi.utils.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -17,6 +18,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -69,6 +72,10 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
         plugin.espers.set("meramera", meramera);
     }
 
+    private void passiveBuff(Player player){
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 3));
+    }
+
     @EventHandler
     public void onItemConsume(PlayerItemConsumeEvent e) {
         Player p = e.getPlayer();
@@ -99,6 +106,24 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
         if ((action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) && isMeraMera(p) && p.getInventory().getItemInMainHand().equals(powerItem)) {
             p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("meramera.onFirePistol").toString()));
             p.launchProjectile(Fireball.class);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent e){
+        Player p = e.getPlayer();
+        if(isMeraMera(p)){
+            passiveBuff(p);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerRespawnEvent(PlayerRespawnEvent e){
+        Player p = e.getPlayer();
+        if(isMeraMera(p)){
+            Bukkit.getScheduler().runTaskLater(plugin, task -> {
+                passiveBuff(p);
+            }, 5L);
         }
     }
 }
