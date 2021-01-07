@@ -4,3 +4,4 @@ meramera:
     name: "&cMera Mera no Mi"
     description: "&4Burns as fire"
     onEat: "&cYou feel your stomach burn"
+    onFirePistol: "&cYou concentrate the fire in the shape of a bullet and shoot"
