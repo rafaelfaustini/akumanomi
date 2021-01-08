@@ -4,6 +4,7 @@ import br.com.rafaelfaustini.akumanomi.AkumaNoMi;
 import br.com.rafaelfaustini.akumanomi.Esper;
 import br.com.rafaelfaustini.akumanomi.controller.BountyController;
 import br.com.rafaelfaustini.akumanomi.controller.PlayerController;
+import br.com.rafaelfaustini.akumanomi.gui.TopGUI;
 import br.com.rafaelfaustini.akumanomi.model.BountyModel;
 import br.com.rafaelfaustini.akumanomi.model.PlayerModel;
 import org.apache.commons.lang.StringUtils;
@@ -37,6 +38,8 @@ public class Bounty implements CommandExecutor, Listener {
         for(BountyModel bounty : bountyControl.getBounties()){
             player.sendMessage(MessageText(bounty.toString()));
         }
+        TopGUI gui = new TopGUI(9, bountyControl.getBounties());
+        gui.openInventory(player);
     }
     private void setBounty(Player p, float amount){
         BountyController bountyControl = new BountyController();
@@ -92,7 +95,7 @@ public class Bounty implements CommandExecutor, Listener {
             playerControl.insert();
         }
         if(!playerControl.isUpdated()){
-            System.out.println("Desatualizado");
+
             playerControl.update();
         }
 
