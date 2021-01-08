@@ -42,8 +42,14 @@ public class Bounty implements CommandExecutor, Listener {
         BountyController bountyControl = new BountyController();
         PlayerModel playerModel = new PlayerModel(p.getUniqueId().toString(), p.getDisplayName());
         BountyModel bounty = new BountyModel(playerModel, amount);
-        bountyControl.setBounty(bounty);
-        bountyControl.insert();
+        bountyControl.getByUUID(p.getUniqueId());
+        if(bountyControl != null){
+            bountyControl.setBounty(bounty);
+            bountyControl.update();
+        } else {
+            bountyControl.setBounty(bounty);
+            bountyControl.insert();
+        }
     }
 
     @Override
@@ -60,13 +66,13 @@ public class Bounty implements CommandExecutor, Listener {
                 switch(args[0]){
                     case "set":
                         if(args.length > 1){
-                            if(StringUtils.isNumeric(args[1])) {
-                                setBounty(player, Float.parseFloat(args[1]));
+                            player.sendMessage(args[1]);
+                            if(StringUtils.isNumeric(args[2])) {
+                                setBounty(player, Float.parseFloat(args[2]));
                             }
                         } else {
                             player.sendMessage("/bounty set <player> <amount>");
                         }
-
                         return true;
 
                 }

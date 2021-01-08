@@ -34,7 +34,7 @@ public class BountyModel {
 
     @Override
     public String toString(){
-        return String.format("%s - %f bellies", this.player, this.money);
+        return String.format("☠ %s - β%.2f", this.player, this.money);
     }
 
 }

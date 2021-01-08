@@ -37,8 +37,10 @@ public class BountyController {
             Connection con = sqliteconnection.openConnection();
             BountyDAO dao = new BountyDAO(con);
             dao.insert(bounty);
+            con.close();
         } catch (Exception e){
-            System.out.println("[AkumaNoMi] There was an error connecting to insert the bounty");
+            System.out.println("[AkumaNoMi] There was an error to insert the bounty");
+            System.out.println(e.getMessage());
 
         }
     }
@@ -48,19 +50,23 @@ public class BountyController {
             Connection con = sqliteconnection.openConnection();
             BountyDAO dao = new BountyDAO(con);
             dao.update(bounty);
+            con.close();
         } catch (Exception e){
-            System.out.println("[AkumaNoMi] There was an error connecting to update the bounty");
-
+            System.out.println("[AkumaNoMi] There was an error to update the bounty");
+            System.out.println(e.getMessage());
         }
     }
-    public void getByUUID(){
+    public void getByUUID(UUID uuid){
         try {
             SqliteConnection sqliteconnection = new SqliteConnection();
             Connection con = sqliteconnection.openConnection();
             BountyDAO dao = new BountyDAO(con);
-            this.bounty = dao.getByUUID(bounty.getPlayer().getUUID());
+            this.bounty = dao.getByUUID(uuid);
+            con.close();
         } catch (Exception e){
-            System.out.println("[AkumaNoMi] There was an error connecting to retrieve the bounty");
+            System.out.println("[AkumaNoMi] There was an error to retrieve the bounty");
+            System.out.println(e.getMessage());
+
         }
     }
     public void top(int n){
@@ -72,8 +78,11 @@ public class BountyController {
             Connection con = sqliteconnection.openConnection();
             BountyDAO dao = new BountyDAO(con);
             this.bounties = dao.top(n);
+            con.close();
         } catch (Exception e){
             System.out.println("[AkumaNoMi] There was an error to retrieve top");
+            System.out.println(e.getMessage());
+
         }
     }
 
