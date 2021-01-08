@@ -33,7 +33,7 @@ public class BountyDAO {
     public List<BountyModel> top(int _n) throws SQLException{
         List<BountyModel> bounties = new ArrayList<BountyModel>();
             ResultSet rs = null;
-            String sql = "SELECT uuid, money from bounty ORDER BY MONEY DESC LIMIT ?";
+            String sql = "SELECT uuid, money from bounty where money > 0 ORDER BY MONEY DESC LIMIT ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
 
             ps.setInt(1, _n);
