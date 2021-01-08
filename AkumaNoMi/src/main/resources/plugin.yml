@@ -10,6 +10,6 @@ commands:
     usage: /<command>
     aliases: ["meramera"]
   bounty:
-    description: Manages the wanted
+    description: Manages the bounty list
     usage: /<command>
-    aliases: [ "wanted" ]
+    aliases: [ "wanted", "procurado", "recompensa" ]

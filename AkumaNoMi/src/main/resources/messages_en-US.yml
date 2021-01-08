@@ -4,3 +4,8 @@ meramera:
     name: "&cMera Mera no Mi"
     description: "&4Burns as fire"
     onEat: "&cYou feel your stomach burn"
+bounty:
+    setSuccess: "&aBounty has been set successfully"
+    topWanted: "Wanted - Dead or Alive"
+    firstPlace: "&6Known as The man closest to One Piece"
+    fourEmperors: "&5A legend, part of the four emperors"

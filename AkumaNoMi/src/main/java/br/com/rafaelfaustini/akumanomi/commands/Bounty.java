@@ -30,7 +30,7 @@ import java.util.List;
 import static br.com.rafaelfaustini.akumanomi.utils.Utils.MessageText;
 
 public class Bounty implements CommandExecutor, Listener {
-
+    AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
     private void getTop(Player player, String n){
         BountyController bountyControl = new BountyController();
         bountyControl.top(Integer.parseInt(n));
@@ -42,17 +42,25 @@ public class Bounty implements CommandExecutor, Listener {
         gui.openInventory(player);
     }
     private void setBounty(Player p, float amount){
-        BountyController bountyControl = new BountyController();
-        PlayerModel playerModel = new PlayerModel(p.getUniqueId().toString(), p.getDisplayName());
-        BountyModel bounty = new BountyModel(playerModel, amount);
-        bountyControl.getByUUID(p.getUniqueId());
-        if(bountyControl != null){
-            bountyControl.setBounty(bounty);
-            bountyControl.update();
-        } else {
-            bountyControl.setBounty(bounty);
-            bountyControl.insert();
+        try{
+            BountyController bountyControl = new BountyController();
+            PlayerModel playerModel = new PlayerModel(p.getUniqueId().toString(), p.getDisplayName());
+            BountyModel bounty = new BountyModel(playerModel, amount);
+            bountyControl.getByUUID(p.getUniqueId());
+            if(bountyControl.getBounty() != null){
+
+                bountyControl.setBounty(bounty);
+                bountyControl.update();
+            } else {
+                bountyControl.setBounty(bounty);
+                bountyControl.insert();
+            }
+        } catch (Exception e){
+            System.out.println(String.format("[AkumaNoMi] %s",e.getMessage()));
+        } finally {
+            p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.setSuccess").toString()));
         }
+
     }
 
     @Override
@@ -69,7 +77,6 @@ public class Bounty implements CommandExecutor, Listener {
                 switch(args[0]){
                     case "set":
                         if(args.length > 1){
-                            player.sendMessage(args[1]);
                             if(StringUtils.isNumeric(args[2])) {
                                 setBounty(player, Float.parseFloat(args[2]));
                             }

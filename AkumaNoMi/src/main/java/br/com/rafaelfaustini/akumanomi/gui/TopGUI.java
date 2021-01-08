@@ -1,5 +1,6 @@
 package br.com.rafaelfaustini.akumanomi.gui;
 
+import br.com.rafaelfaustini.akumanomi.AkumaNoMi;
 import br.com.rafaelfaustini.akumanomi.model.BountyModel;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -26,18 +27,45 @@ public class TopGUI implements Listener {
         private String title = "Top Bounties";
 
         public TopGUI(int size, List<BountyModel> bounties) {
+            AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
+            title = MessageText(plugin.messagesConfig.getConfig().get("bounty.topWanted").toString());
             inv = Bukkit.createInventory(null, size, title);
 
             initializeItems(bounties);
         }
 
         public TopGUI() {
+            AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
+            title = MessageText(plugin.messagesConfig.getConfig().get("bounty.topWanted").toString());
             inv = Bukkit.createInventory(null, 9, title);
         }
         public void initializeItems(List<BountyModel> bounties) {
-            for(BountyModel bounty : bounties){
-                inv.addItem(createGuiItem(bounty.getPlayer().getUUID(), bounty.getPlayer().toString(), String.format("β%.2f",bounty.getMoney())));
+            try {
+                AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
+                int i = 0;
+                for(BountyModel bounty : bounties){
+                    String specialLore = "";
+                    switch(i){
+                        case 0:
+                            specialLore = MessageText(plugin.messagesConfig.getConfig().get("bounty.firstPlace").toString());
+                            inv.addItem(createGuiItem(bounty.getPlayer().getUUID(), bounty.getPlayer().toString(), String.format("β%.2f",bounty.getMoney()), specialLore));
+                            i++;
+                            continue;
+                        case 1:
+                        case 2:
+                        case 3:
+                            specialLore = MessageText(plugin.messagesConfig.getConfig().get("bounty.fourEmperors").toString());
+                            inv.addItem(createGuiItem(bounty.getPlayer().getUUID(), bounty.getPlayer().toString(), String.format("β%.2f",bounty.getMoney()), specialLore));
+                            i++;
+                            continue;
+                    }
+                    inv.addItem(createGuiItem(bounty.getPlayer().getUUID(), bounty.getPlayer().toString(), String.format("β%.2f",bounty.getMoney())));
+                    i++;
+                }
+            } catch (Exception e){
+                e.printStackTrace();
             }
+
         }
 
         protected ItemStack createGuiItem(UUID uuid, final String name, final String... lore) {
