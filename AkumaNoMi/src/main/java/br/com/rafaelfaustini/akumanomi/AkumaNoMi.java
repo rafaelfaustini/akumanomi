@@ -1,13 +1,8 @@
 package br.com.rafaelfaustini.akumanomi;
+import br.com.rafaelfaustini.akumanomi.commands.Bounty;
 import br.com.rafaelfaustini.akumanomi.commands.MeraMeraNoMi;
 import br.com.rafaelfaustini.akumanomi.utils.CustomConfig;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.io.IOException;
 
 public final class AkumaNoMi extends JavaPlugin{
     public CustomConfig messagesConfig;
@@ -23,7 +18,9 @@ public final class AkumaNoMi extends JavaPlugin{
 
         getServer().getPluginManager().registerEvents(new Esper(), this);
         getServer().getPluginManager().registerEvents(new MeraMeraNoMi(), this);
+        getServer().getPluginManager().registerEvents(new Bounty(), this);
         getCommand("MeraMeraNoMi").setExecutor(new MeraMeraNoMi());
+        getCommand("Bounty").setExecutor(new Bounty());
 
     }
 
