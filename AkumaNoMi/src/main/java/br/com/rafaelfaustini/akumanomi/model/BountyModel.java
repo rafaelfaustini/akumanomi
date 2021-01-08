@@ -16,6 +16,14 @@ public class BountyModel {
         return this.money;
     }
 
+    public void setMoney(float money) {
+        this.money = money;
+    }
+
+    public void setPlayer(PlayerModel player) {
+        this.player = player;
+    }
+
     public boolean equals(Object obj){
         if (this == obj)
             return true;
