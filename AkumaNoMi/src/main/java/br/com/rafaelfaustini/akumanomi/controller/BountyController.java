@@ -56,6 +56,17 @@ public class BountyController {
             Utils.TryException(e);
         }
     }
+    public void update(String name, Float money){
+        try {
+            SqliteConnection sqliteconnection = new SqliteConnection();
+            Connection con = sqliteconnection.openConnection();
+            BountyDAO dao = new BountyDAO(con);
+            dao.update(name, money);
+            con.close();
+        } catch (Exception e){
+            Utils.TryException(e);
+        }
+    }
     public void get(UUID uuid){
         try {
             SqliteConnection sqliteconnection = new SqliteConnection();

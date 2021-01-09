@@ -63,6 +63,28 @@ public class Bounty implements CommandExecutor, Listener {
         }
 
     }
+    private void setBounty(Player sender, String name, float amount){
+        try{
+            BountyController bountyControl = new BountyController();
+            bountyControl.update(name, amount);
+        } catch (Exception e){
+            Utils.TryException(e);
+        } finally {
+            sender.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.setSuccess").toString()));
+        }
+
+    }
+
+    private void removeBounty(Player p, String name){
+        try{
+            BountyController bountyControl = new BountyController();
+            bountyControl.update(name, 0f);
+        } catch (Exception e){
+            Utils.TryException(e);
+        } finally {
+            p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.deleteSuccess").toString()));
+        }
+    }
     private void increaseBounty(Player assasin, Player victim){
         try {
             BountyController bountyControl = new BountyController();
@@ -108,7 +130,7 @@ public class Bounty implements CommandExecutor, Listener {
                     }
                     switch (args[0]) {
                         case "set":
-                            if(player.hasPermission("akumanomi.bounty.set")) {
+                            if (player.hasPermission("akumanomi.bounty.set")) {
                                 if (args.length == 2) {
                                     if (StringUtils.isNumeric(args[1])) {
                                         setBounty(player, Float.parseFloat(args[1]));
@@ -117,7 +139,7 @@ public class Bounty implements CommandExecutor, Listener {
                                 } else if (args.length > 2) { // If provided 3 args
                                     if (playerControl.isPlayer(args[1])) {
                                         if (StringUtils.isNumeric(args[2])) {
-                                            setBounty(player, Float.parseFloat(args[2]));
+                                            setBounty(player, args[1], Float.parseFloat(args[2]));
                                             return true;
                                         }
                                     } else {
@@ -136,20 +158,42 @@ public class Bounty implements CommandExecutor, Listener {
                                 player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("akumanomi.insufficientPermissions").toString()));
                                 return true;
                             }
+                        case "delete":
+                        case "remove":
+                        case "deletar":
+                        case "remover":
+                            if (player.hasPermission("akumanomi.bounty.remove")) {
+                                if (args.length == 2) {
+                                    if (playerControl.isPlayer(args[1])) {
+                                        removeBounty(player, args[1]);
+                                        return true;
+                                    } else {
+                                        player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.invalidPlayer").toString()));
+                                        return true;
+                                    }
+                                } else {
+                                    player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.setHelp1").toString()));
+                                    player.sendMessage("/bounty delete <player>");
+                                    player.sendMessage("/bounty remove <player>");
+                                    return true;
+                                }
+                            } else {
+                                player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("akumanomi.insufficientPermissions").toString()));
+                                return true;
+                            }
                     }
-                    if(player.hasPermission("akumanomi.bounty.get.other"))
-                    {
-                        if (playerControl.isPlayer(args[0])) { // if it is a player name, get the player's bounty
-                            getBountyByName(player, args[0]);
-                            return true;
-                        } else {
-                            player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.invalidPlayer").toString()));
-                            return true;
-                        }
-                    } else {
-                        player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("akumanomi.insufficientPermissions").toString()));
-                        return true;
-                    }
+                            if (player.hasPermission("akumanomi.bounty.get.other")) {
+                                if (playerControl.isPlayer(args[0])) { // if it is a player name, get the player's bounty
+                                    getBountyByName(player, args[0]);
+                                    return true;
+                                } else {
+                                    player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.invalidPlayer").toString()));
+                                    return true;
+                                }
+                            } else {
+                                player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("akumanomi.insufficientPermissions").toString()));
+                                return true;
+                            }
                 } else {
                     if(player.hasPermission("akumanomi.bounty.get.self"))
                     {

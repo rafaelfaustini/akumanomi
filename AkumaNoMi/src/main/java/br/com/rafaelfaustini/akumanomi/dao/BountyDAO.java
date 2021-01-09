@@ -134,5 +134,18 @@ public class BountyDAO {
         return rs;
     }
 
+    public Boolean update(String name, Float money) throws SQLException{
+        boolean rs = false;
+
+        String sql = "UPDATE bounty set money=? where uuid in (SELECT uuid from player where nickname=?)";
+        PreparedStatement ps = this.conexao.prepareStatement(sql);
+        ps.setFloat(1, money);
+        ps.setString(2, name);
+
+
+        rs = ps.execute();
+
+        return rs;
+    }
 
 }

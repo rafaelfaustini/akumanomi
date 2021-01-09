@@ -7,6 +7,7 @@ meramera:
     onEat: "&cYou feel your stomach burn"
 bounty:
     bountyFormat: "☠ %% - β%%"
+    deleteSuccess: "&aBounty has been deleted successfully"
     firstPlace: "&6Known as The man closest to One Piece"
     fourEmperors: "&5A legend, part of the four emperors"
     invalidPlayer: "&cThe player you entered is invalid"
