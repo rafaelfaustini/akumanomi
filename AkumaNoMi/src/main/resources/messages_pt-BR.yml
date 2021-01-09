@@ -1,6 +1,24 @@
 akumanomi:
     eatTwice: "&l&6Será que seu corpo aguentará tanto poder ?"
+    insufficientPermissions: "&cVocê não tem permissão para executar esse comando"
 meramera:
     name: "&cMera Mera no Mi"
     description: "&4Arde como fogo"
     onEat: "&cVocê sente seu estômago queimar"
+bounty:
+    bountyFormat: "☠ %% - β%%"
+    deleteSuccess: "&aBounty has been deleted successfully"
+    firstPlace: "&6Conhecido como o mais próximo do One Piece"
+    fourEmperors: "&5Uma lenda, parte dos quatro imperadores"
+    invalidPlayer: "&cO jogador que você digitou é inválido"
+    setHelp1: "Sets bounty to a player"
+    setHelp2: "Sets yourself bounty"
+    setSuccess: "&aRecompensa foi definida com sucesso"
+    topWanted: "Procurado - Vivo ou morto"
+    wantedPoster:
+        bookAuthor: "Marinha"
+        bookTitle: "Procurados"
+        subTitle: "Morto ou vivo"
+        title: "Procurado"
+        wantedPlayerName: "%%"
+        wantedReward: "%%"

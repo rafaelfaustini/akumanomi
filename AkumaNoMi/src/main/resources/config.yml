@@ -1,1 +1,3 @@
+debug: false
 locale: 'en-US'
+wantedPoster: true
