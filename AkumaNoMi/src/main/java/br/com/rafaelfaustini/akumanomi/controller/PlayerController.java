@@ -49,19 +49,34 @@ public class PlayerController {
             SqliteConnection sqliteconnection = new SqliteConnection();
             Connection con = sqliteconnection.openConnection();
             PlayerDAO dao = new PlayerDAO(con);
-            return dao.getByUUID(player.getUUID());
+            PlayerModel result = dao.getByUUID(player.getUUID());
+            con.close();
+            return result;
         } catch (Exception e){
             Utils.TryException(e);
         }
         return null;
     }
-
+    public boolean isPlayer(String name){
+        try {
+            SqliteConnection sqliteconnection = new SqliteConnection();
+            Connection con = sqliteconnection.openConnection();
+            PlayerDAO dao = new PlayerDAO(con);
+            Boolean result = dao.isPlayer(name);
+            con.close();
+            return result;
+        } catch (Exception e){
+            Utils.TryException(e);
+        }
+        return false;
+    }
     public boolean isUpdated(){
         try {
             SqliteConnection sqliteconnection = new SqliteConnection();
             Connection con = sqliteconnection.openConnection();
             PlayerDAO dao = new PlayerDAO(con);
             PlayerModel obj = dao.getByUUID(player.getUUID());
+            con.close();
             return player.equals(obj);
         } catch (Exception ex){
             Utils.TryException(ex);

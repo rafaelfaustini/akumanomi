@@ -5,11 +5,15 @@ meramera:
     description: "&4Arde como fogo"
     onEat: "&cVocê sente seu estômago queimar"
 bounty:
+    setHelp1: "Sets bounty to a player"
+    setHelp2: "Sets yourself bounty"
+    invalidPlayer: "&cO jogador que você digitou é inválido"
     setSuccess: "&aRecompensa foi definida com sucesso"
     topWanted: "Procurado - Vivo ou morto"
     firstPlace: "&6Conhecido como o mais próximo do One Piece"
     fourEmperors: "&5Uma lenda, parte dos quatro imperadores"
     wantedPoster:
+        bookAuthor: "Marinha"
         bookTitle: "Procurados"
         subTitle: "Morto ou vivo"
         title: "Procurado"

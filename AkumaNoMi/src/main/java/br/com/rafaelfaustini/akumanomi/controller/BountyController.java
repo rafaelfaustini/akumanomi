@@ -67,6 +67,18 @@ public class BountyController {
             Utils.TryException(e);
         }
     }
+    public void get(String name){
+        try {
+            SqliteConnection sqliteconnection = new SqliteConnection();
+            Connection con = sqliteconnection.openConnection();
+            BountyDAO dao = new BountyDAO(con);
+
+            this.bounty = dao.get(name);
+            con.close();
+        } catch (Exception e){
+            Utils.TryException(e);
+        }
+    }
     public void get(){
         try {
             SqliteConnection sqliteconnection = new SqliteConnection();

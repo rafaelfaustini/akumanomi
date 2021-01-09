@@ -37,10 +37,15 @@ public class Bounty implements CommandExecutor, Listener {
         TopGUI gui = new TopGUI(9, bountyControl.getBounties());
         gui.openInventory(player);
     }
+    private void getBountyByName(Player player, String name){
+        BountyController bountyControl = new BountyController();
+        bountyControl.get(name);
+        player.sendMessage(MessageText(bountyControl.getBounty().toString()));
+    }
     private void setBounty(Player p, float amount){
         try{
             BountyController bountyControl = new BountyController();
-            PlayerModel playerModel = new PlayerModel(p.getUniqueId().toString(), p.getDisplayName());
+            PlayerModel playerModel = new PlayerModel(p.getUniqueId().toString(), p.getPlayerListName());
             BountyModel bounty = new BountyModel(playerModel, amount);
             bountyControl.get(p.getUniqueId());
             if(bountyControl.getBounty() != null){
@@ -89,24 +94,49 @@ public class Bounty implements CommandExecutor, Listener {
             AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-
+                PlayerController playerControl = new PlayerController();
                 if (args.length > 0) {
+
                     if (StringUtils.isNumeric(args[0])) {
                         this.getTop(player, args[0]);
                         return true;
                     }
                     switch (args[0]) {
                         case "set":
-                            if (args.length > 1) {
-                                if (StringUtils.isNumeric(args[2])) {
-                                    setBounty(player, Float.parseFloat(args[2]));
+                            if(args.length == 2){
+                                if (StringUtils.isNumeric(args[1])) {
+                                    setBounty(player, Float.parseFloat(args[1]));
+                                    return true;
                                 }
-                            } else {
+                            } else if (args.length > 2) { // If provided 3 args
+                                if(playerControl.isPlayer(args[1])) {
+                                    if (StringUtils.isNumeric(args[2])) {
+                                        setBounty(player, Float.parseFloat(args[2]));
+                                        return true;
+                                    }
+                                } else {
+                                    player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.invalidPlayer").toString()));
+                                    return true;
+                                }
+                            } else { // Options with 3 args
+                                player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.setHelp1").toString()));
                                 player.sendMessage("/bounty set <player> <amount>");
+                                player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.setHelp2").toString()));
+                                player.sendMessage("/bounty set <amount>");
+                                return true;
                             }
                             return true;
-
                     }
+                    if(playerControl.isPlayer(args[0])){ // if it is a player name, get the player's bounty
+                        getBountyByName(player, args[0]);
+                        return true;
+                    } else {
+                        player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("bounty.invalidPlayer").toString()));
+                        return true;
+                    }
+                } else {
+                    getBountyByName(player, player.getPlayerListName()); // If no args get self player bounty
+                    return true;
                 }
             }
         } catch (Exception e){
@@ -119,7 +149,7 @@ public class Bounty implements CommandExecutor, Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         PlayerController playerControl = new PlayerController();
-        PlayerModel playerModel = new PlayerModel(p.getUniqueId().toString(), p.getDisplayName());
+        PlayerModel playerModel = new PlayerModel(p.getUniqueId().toString(), p.getPlayerListName());
         playerControl.setPlayer(playerModel);
         if(playerControl.getByUUID() == null){
             playerControl.insert();

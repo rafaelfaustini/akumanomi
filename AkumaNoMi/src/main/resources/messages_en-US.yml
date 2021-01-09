@@ -5,12 +5,15 @@ meramera:
     description: "&4Burns as fire"
     onEat: "&cYou feel your stomach burn"
 bounty:
+    setHelp1: "Sets bounty to a player"
+    setHelp2: "Sets yourself bounty"
+    invalidPlayer: "&cThe player you entered is invalid"
     setSuccess: "&aBounty has been set successfully"
     topWanted: "Wanted - Dead or Alive"
     firstPlace: "&6Known as The man closest to One Piece"
     fourEmperors: "&5A legend, part of the four emperors"
     wantedPoster:
-        bookAuthor: "Marinha"
+        bookAuthor: "Marine"
         bookTitle: "WantedPoster"
         subTitle: "Dead or alive"
         title: "Wanted"

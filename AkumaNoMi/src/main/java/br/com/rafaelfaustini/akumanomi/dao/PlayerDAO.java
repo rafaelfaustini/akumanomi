@@ -45,6 +45,20 @@ public class PlayerDAO {
         return null;
     }
 
+    public Boolean isPlayer(String _name) throws SQLException{
+        ResultSet rs = null;
+        String uuidStr = _name;
+        String sql = "SELECT uuid, nickname FROM player where nickname=?";
+
+        PreparedStatement ps = this.conexao.prepareStatement(sql);
+        ps.setString(1, uuidStr);
+        rs = ps.executeQuery();
+        if (!rs.next()){
+            return false;
+        }
+        return true;
+    }
+
     public void insert(PlayerModel p) throws SQLException{
         String sql = "insert into player (uuid, nickname) values (?, ?)";
         PreparedStatement ps = this.conexao.prepareStatement(sql);

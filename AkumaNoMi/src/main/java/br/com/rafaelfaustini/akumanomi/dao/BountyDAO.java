@@ -73,6 +73,24 @@ public class BountyDAO {
         return null;
     }
 
+    public BountyModel get(String _name) throws SQLException{
+        ResultSet rs = null;
+        String sql = "SELECT uuid, money FROM bounty where uuid in (SELECT uuid from player where nickname=?)";
+
+        PreparedStatement ps = this.conexao.prepareStatement(sql);
+        ps.setString(1, _name);
+        rs = ps.executeQuery();
+        if(rs.next()){
+            String uuid = rs.getString(1);
+            Float money = rs.getFloat(2);
+            PlayerDAO dao = new PlayerDAO(conexao);
+            PlayerModel p = dao.getByUUID(UUID.fromString(uuid));
+            BountyModel b = new BountyModel(p, money);
+            return b;
+        }
+        return null;
+    }
+
     public List<BountyModel> get() throws SQLException{
         ResultSet rs = null;
         List<BountyModel> bounties = new ArrayList<BountyModel>();
