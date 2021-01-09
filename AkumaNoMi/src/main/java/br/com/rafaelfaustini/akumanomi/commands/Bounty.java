@@ -182,7 +182,8 @@ public class Bounty implements CommandExecutor, Listener {
                                 return true;
                             }
                     }
-                            if (player.hasPermission("akumanomi.bounty.get.other")) {
+
+                    if (player.hasPermission("akumanomi.bounty.get.other")) {
                                 if (playerControl.isPlayer(args[0])) { // if it is a player name, get the player's bounty
                                     getBountyByName(player, args[0]);
                                     return true;
@@ -194,6 +195,7 @@ public class Bounty implements CommandExecutor, Listener {
                                 player.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("akumanomi.insufficientPermissions").toString()));
                                 return true;
                             }
+
                 } else {
                     if(player.hasPermission("akumanomi.bounty.get.self"))
                     {
