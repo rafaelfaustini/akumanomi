@@ -1,5 +1,8 @@
 package br.com.rafaelfaustini.akumanomi.model;
 
+import br.com.rafaelfaustini.akumanomi.AkumaNoMi;
+import br.com.rafaelfaustini.akumanomi.utils.Utils;
+
 public class BountyModel {
     private PlayerModel player;
     private float money;
@@ -42,7 +45,14 @@ public class BountyModel {
 
     @Override
     public String toString(){
-        return String.format("☠ %s - β%.2f", this.player, this.money);
+        try {
+            AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
+            String message = plugin.messagesConfig.getConfig().get("bounty.bountyFormat").toString();
+            return Utils.MessageText(message, player.toString(), String.format("%.2f", money));
+        } catch (Exception e){
+            Utils.TryException(e);
+        }
+        return String.format("☠ %s - β%.2f", this.player, this.money); // Default
     }
 
 }

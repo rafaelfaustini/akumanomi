@@ -1,18 +1,19 @@
 akumanomi:
-    insufficientPermissions: "&cYou do not have permission to execute this command"
     eatTwice: "&l&6Will your body resist so much power ?"
+    insufficientPermissions: "&cYou do not have permission to execute this command"
 meramera:
     name: "&cMera Mera no Mi"
     description: "&4Burns as fire"
     onEat: "&cYou feel your stomach burn"
 bounty:
-    setHelp1: "Sets bounty to a player"
-    setHelp2: "Sets yourself bounty"
-    invalidPlayer: "&cThe player you entered is invalid"
-    setSuccess: "&aBounty has been set successfully"
-    topWanted: "Wanted - Dead or Alive"
+    bountyFormat: "☠ %% - β%%"
     firstPlace: "&6Known as The man closest to One Piece"
     fourEmperors: "&5A legend, part of the four emperors"
+    invalidPlayer: "&cThe player you entered is invalid"
+    setHelp1: "Sets bounty to a player"
+    setHelp2: "Sets yourself bounty"
+    setSuccess: "&aBounty has been set successfully"
+    topWanted: "Wanted - Dead or Alive"
     wantedPoster:
         bookAuthor: "Marine"
         bookTitle: "WantedPoster"
