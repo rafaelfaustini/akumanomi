@@ -2,6 +2,7 @@ package br.com.rafaelfaustini.akumanomi.commands;
 
 import br.com.rafaelfaustini.akumanomi.AkumaNoMi;
 import br.com.rafaelfaustini.akumanomi.Esper;
+import br.com.rafaelfaustini.akumanomi.utils.Debug;
 import br.com.rafaelfaustini.akumanomi.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -59,12 +60,16 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
     }
 
     private boolean isMeraMeraFruit(ItemStack item){
-        String itemName = plugin.messagesConfig.getConfig().get("meramera.name").toString();
-        boolean checkName =  ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', itemName)).equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&',ChatColor.stripColor(item.getItemMeta().getDisplayName())));
-        boolean checkColor = item.getItemMeta().getDisplayName().length() == (itemName).length();
+        try {
+            String itemName = plugin.messagesConfig.getConfig().get("meramera.name").toString();
+            boolean checkName =  ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', itemName)).equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&',ChatColor.stripColor(item.getItemMeta().getDisplayName())));
+            boolean checkColor = item.getItemMeta().getDisplayName().length() == (itemName).length();
 
-        if(item.getType() == Material.BEETROOT && checkName && checkColor){
-            return true;
+            if(item.getType() == Material.BEETROOT && checkName && checkColor){
+                return true;
+            }
+        } catch (Exception e){
+            Utils.TryException(e);
         }
         return false;
     }
@@ -94,6 +99,7 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
 
     @EventHandler
     public void onItemConsume(PlayerItemConsumeEvent e) {
+        try {
         Player p = e.getPlayer();
         if(isMeraMeraFruit(e.getItem())){
 
@@ -111,6 +117,9 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, Integer.MAX_VALUE, 5));
                 p.getWorld().createExplosion(p.getLocation(), 10);
             }
+        }
+        } catch (Exception ex){
+            Utils.TryException(ex);
         }
     }
 

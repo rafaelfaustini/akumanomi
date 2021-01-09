@@ -9,3 +9,7 @@ commands:
     description: Mera Mera no mi
     usage: /<command>
     aliases: ["meramera"]
+  bounty:
+    description: Manages the bounty list
+    usage: /<command>
+    aliases: [ "wanted", "procurado", "recompensa" ]

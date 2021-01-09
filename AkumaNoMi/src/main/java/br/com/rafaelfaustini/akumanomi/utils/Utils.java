@@ -5,8 +5,12 @@ import org.bukkit.ChatColor;
 import java.util.Random;
 
 public class Utils {
-    public static String MessageText(String str){
+
+    public static String MessageText(String str, String... stringVariables){
         if(str == null) return "";
+        for(String stringVar : stringVariables){
+            str = str.replaceFirst("%%", stringVar);
+        }
         return ChatColor.translateAlternateColorCodes('&', str);
     }
     public static boolean rollD(int number){
@@ -16,5 +20,12 @@ public class Utils {
             return true;
         }
         return false;
+
+    public static void TryException(Exception e){
+        System.out.println("[AkumaNoMi] There was an error loading the plugin");
+        if(Debug.getEnabled()){
+            System.out.println(String.format("[AkumaNoMi] %s",e.getMessage()));
+            e.printStackTrace();
+        }
     }
 }
