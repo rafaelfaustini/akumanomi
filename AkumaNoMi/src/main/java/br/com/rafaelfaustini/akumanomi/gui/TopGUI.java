@@ -2,6 +2,8 @@ package br.com.rafaelfaustini.akumanomi.gui;
 
 import br.com.rafaelfaustini.akumanomi.AkumaNoMi;
 import br.com.rafaelfaustini.akumanomi.model.BountyModel;
+import br.com.rafaelfaustini.akumanomi.utils.Debug;
+import br.com.rafaelfaustini.akumanomi.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -63,7 +65,7 @@ public class TopGUI implements Listener {
                     i++;
                 }
             } catch (Exception e){
-                e.printStackTrace();
+                Utils.TryException(e);
             }
 
         }

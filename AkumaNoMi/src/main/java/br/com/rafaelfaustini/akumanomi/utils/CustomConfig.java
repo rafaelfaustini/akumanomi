@@ -25,7 +25,7 @@ public class CustomConfig {
         try {
             fileConfig.save(file);
         } catch (IOException e){
-            System.out.println("[AkumaNoMi] Failed to save file");
+            Utils.TryException(e);
         }
     }
 
@@ -38,24 +38,24 @@ public class CustomConfig {
             fileConfig.set(section, value);
             fileConfig.save(file);
         } catch (IOException e){
-            System.out.println("[AkumaNoMi] Failed to save file");
+            Utils.TryException(e);
         }
     }
 
     private void createConfig(String name) {
-        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("AkumaNoMi");
-        file = new File(plugin.getDataFolder(), name);
-        if (!file.exists()) {
-            file.getParentFile().mkdirs();
-            plugin.saveResource(name, false);
-        }
+        try{
+            Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("AkumaNoMi");
+            file = new File(plugin.getDataFolder(), name);
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+                plugin.saveResource(name, false);
+            }
 
-        fileConfig = new YamlConfiguration();
-        try {
+            fileConfig = new YamlConfiguration();
+
             fileConfig.load(file);
         } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-            System.out.println("[AkumaNoMi] Error: "+e);
+            Utils.TryException(e);
         }
     }
 

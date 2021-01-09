@@ -3,6 +3,8 @@ package br.com.rafaelfaustini.akumanomi.controller;
 import br.com.rafaelfaustini.akumanomi.dao.PlayerDAO;
 import br.com.rafaelfaustini.akumanomi.dao.SqliteConnection;
 import br.com.rafaelfaustini.akumanomi.model.PlayerModel;
+import br.com.rafaelfaustini.akumanomi.utils.Debug;
+import br.com.rafaelfaustini.akumanomi.utils.Utils;
 
 import java.sql.Connection;
 import java.util.UUID;
@@ -29,7 +31,7 @@ public class PlayerController {
             PlayerDAO dao = new PlayerDAO(con);
             dao.insert(player);
         } catch (Exception e){
-
+            Utils.TryException(e);
         }
     }
     public void update(){
@@ -39,7 +41,7 @@ public class PlayerController {
             PlayerDAO dao = new PlayerDAO(con);
             dao.update(player);
         } catch (Exception e){
-
+            Utils.TryException(e);
         }
     }
     public PlayerModel getByUUID(){
@@ -49,7 +51,7 @@ public class PlayerController {
             PlayerDAO dao = new PlayerDAO(con);
             return dao.getByUUID(player.getUUID());
         } catch (Exception e){
-
+            Utils.TryException(e);
         }
         return null;
     }
@@ -61,8 +63,9 @@ public class PlayerController {
             PlayerDAO dao = new PlayerDAO(con);
             PlayerModel obj = dao.getByUUID(player.getUUID());
             return player.equals(obj);
-        } catch (Exception e){
-            return true;
+        } catch (Exception ex){
+            Utils.TryException(ex);
         }
+        return false;
     }
 }

@@ -4,6 +4,8 @@ import br.com.rafaelfaustini.akumanomi.dao.BountyDAO;
 import br.com.rafaelfaustini.akumanomi.dao.SqliteConnection;
 import br.com.rafaelfaustini.akumanomi.model.BountyModel;
 import br.com.rafaelfaustini.akumanomi.model.PlayerModel;
+import br.com.rafaelfaustini.akumanomi.utils.Debug;
+import br.com.rafaelfaustini.akumanomi.utils.Utils;
 
 
 import java.sql.Connection;
@@ -40,9 +42,7 @@ public class BountyController {
             dao.insert(bounty);
             con.close();
         } catch (Exception e){
-            System.out.println("[AkumaNoMi] There was an error to insert the bounty");
-            System.out.println(e.getMessage());
-
+            Utils.TryException(e);
         }
     }
     public void update(){
@@ -53,8 +53,7 @@ public class BountyController {
             dao.update(bounty);
             con.close();
         } catch (Exception e){
-            System.out.println("[AkumaNoMi] There was an error to update the bounty");
-            System.out.println(e.getMessage());
+            Utils.TryException(e);
         }
     }
     public void get(UUID uuid){
@@ -65,9 +64,7 @@ public class BountyController {
             this.bounty = dao.get(uuid);
             con.close();
         } catch (Exception e){
-            System.out.println("[AkumaNoMi] There was an error to retrieve the bounty");
-            System.out.println(e.getMessage());
-
+            Utils.TryException(e);
         }
     }
     public void get(){
@@ -78,9 +75,7 @@ public class BountyController {
             this.bounties = dao.get();
             con.close();
         } catch (Exception e){
-            System.out.println("[AkumaNoMi] There was an error to retrieve the bounty");
-            System.out.println(e.getMessage());
-
+            Utils.TryException(e);
         }
     }
     public void top(int n){
@@ -94,8 +89,7 @@ public class BountyController {
             this.bounties = dao.top(n);
             con.close();
         } catch (Exception e){
-            System.out.println("[AkumaNoMi] There was an error to retrieve top");
-            System.out.println(e.getMessage());
+            Utils.TryException(e);
 
         }
     }
