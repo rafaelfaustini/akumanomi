@@ -12,8 +12,8 @@ bounty:
   firstPlace: "&6Conhecido como o mais próximo do One Piece"
   fourEmperors: "&5Uma lenda, parte dos quatro imperadores"
   invalidPlayer: "&cO jogador que você digitou é inválido"
-  setHelp1: "Sets bounty to a player"
-  setHelp2: "Sets yourself bounty"
+  setHelp1: "Define a recompensa por um player"
+  setHelp2: "Define a recompensa por si"
   setSuccess: "&aRecompensa foi definida com sucesso"
   topWanted: "Procurado - Vivo ou morto"
   wantedPoster:
