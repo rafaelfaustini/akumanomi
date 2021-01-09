@@ -7,12 +7,13 @@ import br.com.rafaelfaustini.akumanomi.model.PlayerModel;
 
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class BountyController {
     private BountyModel bounty;
-    private List<BountyModel> bounties;
+    private List<BountyModel> bounties = new ArrayList<BountyModel>();
 
     public BountyController(){
 
@@ -56,12 +57,25 @@ public class BountyController {
             System.out.println(e.getMessage());
         }
     }
-    public void getByUUID(UUID uuid){
+    public void get(UUID uuid){
         try {
             SqliteConnection sqliteconnection = new SqliteConnection();
             Connection con = sqliteconnection.openConnection();
             BountyDAO dao = new BountyDAO(con);
-            this.bounty = dao.getByUUID(uuid);
+            this.bounty = dao.get(uuid);
+            con.close();
+        } catch (Exception e){
+            System.out.println("[AkumaNoMi] There was an error to retrieve the bounty");
+            System.out.println(e.getMessage());
+
+        }
+    }
+    public void get(){
+        try {
+            SqliteConnection sqliteconnection = new SqliteConnection();
+            Connection con = sqliteconnection.openConnection();
+            BountyDAO dao = new BountyDAO(con);
+            this.bounties = dao.get();
             con.close();
         } catch (Exception e){
             System.out.println("[AkumaNoMi] There was an error to retrieve the bounty");

@@ -53,7 +53,7 @@ public class BountyDAO {
         return bounties;
     }
 
-    public BountyModel getByUUID(UUID _uuid) throws SQLException{
+    public BountyModel get(UUID _uuid) throws SQLException{
         ResultSet rs = null;
         String uuidStr = _uuid.toString();
         String sql = "SELECT uuid, money FROM bounty where uuid=?";
@@ -73,6 +73,24 @@ public class BountyDAO {
         return null;
     }
 
+    public List<BountyModel> get() throws SQLException{
+        ResultSet rs = null;
+        List<BountyModel> bounties = new ArrayList<BountyModel>();
+        String sql = "SELECT uuid, money FROM bounty where money > 0 ORDER BY money DESC";
+
+        PreparedStatement ps = this.conexao.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+            String uuid = rs.getString(1);
+            Float money = rs.getFloat(2);
+            PlayerDAO dao = new PlayerDAO(conexao);
+            PlayerModel p = dao.getByUUID(UUID.fromString(uuid));
+            BountyModel b = new BountyModel(p, money);
+            bounties.add(b);
+        }
+        return bounties;
+    }
 
     public void insert(BountyModel b) throws SQLException{
         String sql = "insert into bounty (uuid, money) values (?, ?)";

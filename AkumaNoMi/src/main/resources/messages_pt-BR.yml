@@ -9,3 +9,9 @@ bounty:
     topWanted: "Procurado - Vivo ou morto"
     firstPlace: "&6Conhecido como o mais próximo do One Piece"
     fourEmperors: "&5Uma lenda, parte dos quatro imperadores"
+    wantedPoster:
+        bookTitle: "Procurados"
+        subTitle: "Morto ou vivo"
+        title: "Procurado"
+        wantedPlayerName: "%%"
+        wantedReward: "%%"

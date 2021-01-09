@@ -21,13 +21,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,6 +38,7 @@ import static br.com.rafaelfaustini.akumanomi.utils.Utils.MessageText;
 
 public class Bounty implements CommandExecutor, Listener {
     AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
+    private List<BountyModel> bounties = new ArrayList<BountyModel>();
     private void getTop(Player player, String n){
         BountyController bountyControl = new BountyController();
         bountyControl.top(Integer.parseInt(n));
@@ -50,7 +54,7 @@ public class Bounty implements CommandExecutor, Listener {
             BountyController bountyControl = new BountyController();
             PlayerModel playerModel = new PlayerModel(p.getUniqueId().toString(), p.getDisplayName());
             BountyModel bounty = new BountyModel(playerModel, amount);
-            bountyControl.getByUUID(p.getUniqueId());
+            bountyControl.get(p.getUniqueId());
             if(bountyControl.getBounty() != null){
 
                 bountyControl.setBounty(bounty);
@@ -69,9 +73,9 @@ public class Bounty implements CommandExecutor, Listener {
     private void increaseBounty(Player assasin, Player victim){
         try {
             BountyController bountyControl = new BountyController();
-            bountyControl.getByUUID(assasin.getUniqueId());
+            bountyControl.get(assasin.getUniqueId());
             BountyModel assasinBounty = bountyControl.getBounty();
-            bountyControl.getByUUID(victim.getUniqueId());
+            bountyControl.get(victim.getUniqueId());
             BountyModel victimBounty = bountyControl.getBounty();
             if(assasinBounty.getMoney() < 100000000f){
                 Float bonus = (victimBounty.getMoney()*0.15f) + 1000f;
@@ -148,8 +152,6 @@ public class Bounty implements CommandExecutor, Listener {
            Player killer = entity.getKiller();
            if(killed != null && killer != null){
                increaseBounty(killer, killed);
-               killed.sendMessage("You were killed");
-               killer.sendMessage("You killed");
            }
         }
     }

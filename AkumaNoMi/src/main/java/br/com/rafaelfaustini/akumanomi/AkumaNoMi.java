@@ -11,18 +11,23 @@ public final class AkumaNoMi extends JavaPlugin{
     @Override
     public void onEnable() {
         // Plugin startup logic
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
-        String locale = getConfig().getString("locale");
-        this.messagesConfig = new CustomConfig(String.format("messages_%s.yml", locale));
-        this.espers = new CustomConfig("espers.yml");
+        try {
+            getConfig().options().copyDefaults();
+            saveDefaultConfig();
+            String locale = getConfig().getString("locale");
+            this.messagesConfig = new CustomConfig(String.format("messages_%s.yml", locale));
+            this.espers = new CustomConfig("espers.yml");
 
-        getServer().getPluginManager().registerEvents(new Esper(), this);
-        getServer().getPluginManager().registerEvents(new MeraMeraNoMi(), this);
-        getServer().getPluginManager().registerEvents(new Bounty(), this);
-        getServer().getPluginManager().registerEvents(new TopGUI(), this);
-        getCommand("MeraMeraNoMi").setExecutor(new MeraMeraNoMi());
-        getCommand("Bounty").setExecutor(new Bounty());
+            getServer().getPluginManager().registerEvents(new Esper(), this);
+            getServer().getPluginManager().registerEvents(new MeraMeraNoMi(), this);
+            getServer().getPluginManager().registerEvents(new Bounty(), this);
+            getServer().getPluginManager().registerEvents(new TopGUI(), this);
+            if(getConfig().getBoolean("wantedPoster")) getServer().getPluginManager().registerEvents(new WantedPoster(), this);
+            getCommand("MeraMeraNoMi").setExecutor(new MeraMeraNoMi());
+            getCommand("Bounty").setExecutor(new Bounty());
+        } catch (Exception e){
+            System.out.println("[AkumaNoMi] There was an error loading the plugin");
+        }
     }
 
     @Override

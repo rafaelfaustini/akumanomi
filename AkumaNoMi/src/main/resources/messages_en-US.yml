@@ -9,3 +9,11 @@ bounty:
     topWanted: "Wanted - Dead or Alive"
     firstPlace: "&6Known as The man closest to One Piece"
     fourEmperors: "&5A legend, part of the four emperors"
+    wantedPoster:
+        bookAuthor: "Marinha"
+        bookTitle: "WantedPoster"
+        subTitle: "Dead or alive"
+        title: "Wanted"
+        wantedPlayerName: "%%"
+        wantedReward: "%%"
+
