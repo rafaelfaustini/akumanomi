@@ -1,4 +1,5 @@
 akumanomi:
+    insufficientPermissions: "&cYou do not have permission to execute this command"
     eatTwice: "&l&6Will your body resist so much power ?"
 meramera:
     name: "&cMera Mera no Mi"
