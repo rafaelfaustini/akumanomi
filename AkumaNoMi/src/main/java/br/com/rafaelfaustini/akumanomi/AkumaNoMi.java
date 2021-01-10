@@ -1,6 +1,7 @@
 package br.com.rafaelfaustini.akumanomi;
 import br.com.rafaelfaustini.akumanomi.commands.Bounty;
 import br.com.rafaelfaustini.akumanomi.commands.MeraMeraNoMi;
+import br.com.rafaelfaustini.akumanomi.controller.AkumaNoMiController;
 import br.com.rafaelfaustini.akumanomi.gui.TopGUI;
 import br.com.rafaelfaustini.akumanomi.utils.CustomConfig;
 import br.com.rafaelfaustini.akumanomi.utils.Debug;
@@ -9,7 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AkumaNoMi extends JavaPlugin{
     public CustomConfig messagesConfig;
-    public CustomConfig espers;
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -19,7 +19,8 @@ public final class AkumaNoMi extends JavaPlugin{
             Debug.initialize(getConfig());
             String locale = getConfig().getString("locale");
             this.messagesConfig = new CustomConfig(String.format("messages_%s.yml", locale));
-            this.espers = new CustomConfig("espers.yml");
+            AkumaNoMiController akumanomi = new AkumaNoMiController();
+            akumanomi.init();
 
             getServer().getPluginManager().registerEvents(new Esper(), this);
             getServer().getPluginManager().registerEvents(new MeraMeraNoMi(), this);

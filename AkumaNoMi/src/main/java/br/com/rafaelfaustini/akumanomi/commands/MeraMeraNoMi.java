@@ -2,6 +2,10 @@ package br.com.rafaelfaustini.akumanomi.commands;
 
 import br.com.rafaelfaustini.akumanomi.AkumaNoMi;
 import br.com.rafaelfaustini.akumanomi.Esper;
+import br.com.rafaelfaustini.akumanomi.controller.AkumaNoMiController;
+import br.com.rafaelfaustini.akumanomi.controller.PlayerController;
+import br.com.rafaelfaustini.akumanomi.model.AkumaNoMiModel;
+import br.com.rafaelfaustini.akumanomi.model.PlayerModel;
 import br.com.rafaelfaustini.akumanomi.utils.Debug;
 import br.com.rafaelfaustini.akumanomi.utils.Utils;
 import org.bukkit.Bukkit;
@@ -38,7 +42,8 @@ import static br.com.rafaelfaustini.akumanomi.utils.Utils.rollD;
 
 
 public class MeraMeraNoMi implements CommandExecutor, Listener {
-    AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
+    private AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
+    private final String name = "Mera Mera No Mi";
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
                 Player player = (Player) sender;
@@ -53,10 +58,14 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
                 return false;
     }
 
-    public boolean isMeraMera(Player player){
-        List<String> meramera = plugin.espers.getConfig().getStringList("meramera");
-
-        return meramera.contains(player.getUniqueId().toString());
+    public boolean isMeraMera(Player p){
+        PlayerController playerControl = new PlayerController();
+        PlayerModel player = playerControl.getByUUID(p.getUniqueId());
+        boolean isMera = player.isEsper();
+        if(isMera){
+         isMera = player.getFruit().getName().equals(name);
+        }
+        return isMera;
     }
 
     private boolean isMeraMeraFruit(ItemStack item){
@@ -65,7 +74,11 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
             boolean checkName =  ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', itemName)).equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&',ChatColor.stripColor(item.getItemMeta().getDisplayName())));
             boolean checkColor = item.getItemMeta().getDisplayName().length() == (itemName).length();
 
-            if(item.getType() == Material.BEETROOT && checkName && checkColor){
+            AkumaNoMiController akumanomiControl = new AkumaNoMiController();
+            akumanomiControl.get(name);
+
+
+            if(item.getType() == akumanomiControl.getFruit().getItem() && checkName && checkColor){
                 return true;
             }
         } catch (Exception e){
@@ -75,9 +88,8 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
     }
 
     private void set(Player player){
-        List<String> meramera = plugin.espers.getConfig().getStringList("meramera");
-        meramera.add(player.getUniqueId().toString());
-        plugin.espers.set("meramera", meramera);
+        PlayerController playerControl = new PlayerController();
+        playerControl.setEsper(player.getUniqueId(), name);
     }
 
     private void passiveBuff(Player player){
@@ -102,14 +114,13 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
         try {
         Player p = e.getPlayer();
         if(isMeraMeraFruit(e.getItem())){
-
-            List<String> espers = plugin.espers.getConfig().getStringList("espers");
-            if(!Esper.isEsper(p)) {
+            PlayerController playerControl = new PlayerController();
+            PlayerModel player = playerControl.getByUUID(p.getUniqueId());
+            p.sendMessage(Boolean.toString(player.isEsper()));
+            if(!player.isEsper()) {
                 p.setFireTicks(50);
-                p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("meramera.onEat").toString()));
                 p.getWorld().spawnParticle(Particle.SMOKE_LARGE, p.getLocation(), 100);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 3));
-                Esper.setEsper(p);
                 this.set(p);
                 p.spawnParticle(Particle.FLAME, p.getLocation(), 500);
             } else {
@@ -128,9 +139,11 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
         Player p = e.getPlayer();
         Action action = e.getAction();
         ItemStack powerItem = new ItemStack(Material.BLAZE_ROD);
-        if ((action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) && isMeraMera(p) && p.getInventory().getItemInMainHand().equals(powerItem)) {
-            p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("meramera.onFirePistol").toString()));
-            p.launchProjectile(Fireball.class);
+        if ((action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) && p.getInventory().getItemInMainHand().equals(powerItem)) {
+            if(isMeraMera(p)) {
+                p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("meramera.onFirePistol").toString()));
+                p.launchProjectile(Fireball.class);
+            }
         }
     }
 

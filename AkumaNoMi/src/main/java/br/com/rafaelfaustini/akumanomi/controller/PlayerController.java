@@ -7,6 +7,7 @@ import br.com.rafaelfaustini.akumanomi.utils.Debug;
 import br.com.rafaelfaustini.akumanomi.utils.Utils;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.UUID;
 
 public class PlayerController {
@@ -56,6 +57,30 @@ public class PlayerController {
             Utils.TryException(e);
         }
         return null;
+    }
+    public PlayerModel getByUUID(UUID uuid){
+        try {
+            SqliteConnection sqliteconnection = new SqliteConnection();
+            Connection con = sqliteconnection.openConnection();
+            PlayerDAO dao = new PlayerDAO(con);
+            PlayerModel result = dao.getByUUID(uuid);
+            con.close();
+            return result;
+        } catch (Exception e){
+            Utils.TryException(e);
+        }
+        return null;
+    }
+    public void setEsper(UUID _uuid, String fruitname) {
+        try {
+            SqliteConnection sqliteconnection = new SqliteConnection();
+            Connection con = sqliteconnection.openConnection();
+            PlayerDAO dao = new PlayerDAO(con);
+            dao.setEsper(_uuid, fruitname);
+            con.close();
+        } catch (Exception e){
+            Utils.TryException(e);
+        }
     }
     public boolean isPlayer(String name){
         try {

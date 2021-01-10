@@ -1,5 +1,6 @@
 package br.com.rafaelfaustini.akumanomi.dao;
 
+import br.com.rafaelfaustini.akumanomi.model.AkumaNoMiModel;
 import br.com.rafaelfaustini.akumanomi.model.PlayerModel;
 
 import java.sql.Connection;
@@ -14,7 +15,7 @@ public class PlayerDAO {
 
     private void createTable(){
         try {
-            String sql = "CREATE TABLE IF NOT EXISTS `player` (`uuid` TEXT PRIMARY KEY, `nickname` TEXT)";
+            String sql = "CREATE TABLE IF NOT EXISTS player (uuid TEXT PRIMARY KEY, nickname TEXT, akumanomi int, FOREIGN KEY (akumanomi) references akumanomi(id))";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.execute();
         } catch (SQLException throwables) {
@@ -30,7 +31,7 @@ public class PlayerDAO {
     public PlayerModel getByUUID(UUID _uuid) throws SQLException{
             ResultSet rs = null;
             String uuidStr = _uuid.toString();
-            String sql = "SELECT uuid, nickname FROM player where uuid=?";
+            String sql = "SELECT uuid, nickname, akumanomi FROM player where uuid=?";
 
             PreparedStatement ps = this.conexao.prepareStatement(sql);
             ps.setString(1, uuidStr);
@@ -39,10 +40,26 @@ public class PlayerDAO {
             if(rs.next()){
                 String uuid = rs.getString(1);
                 String nickname = rs.getString(2);
-                PlayerModel p = new PlayerModel(uuid, nickname);
+                int akumanomi = rs.getInt(3);
+                AkumaNoMiDAO akumaDAO = new AkumaNoMiDAO(conexao);
+                AkumaNoMiModel fruit = akumaDAO.get(akumanomi);
+                PlayerModel p = new PlayerModel(uuid, nickname, fruit);
                 return p;
             }
         return null;
+    }
+
+    public void setEsper(UUID _uuid, String fruitname) throws SQLException{
+        AkumaNoMiDAO fruitDAO = new AkumaNoMiDAO(conexao);
+        AkumaNoMiModel fruit = fruitDAO.get(fruitname);
+
+        String sql = "UPDATE player SET akumanomi = ? where uuid = ?";
+        PreparedStatement ps = this.conexao.prepareStatement(sql);
+
+        ps.setInt(1, fruit.getId());
+        ps.setString(2, _uuid.toString());
+
+        ps.execute();
     }
 
     public Boolean isPlayer(String _name) throws SQLException{

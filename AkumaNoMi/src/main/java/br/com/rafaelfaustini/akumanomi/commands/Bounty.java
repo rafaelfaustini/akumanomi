@@ -219,14 +219,15 @@ public class Bounty implements CommandExecutor, Listener {
         PlayerController playerControl = new PlayerController();
         PlayerModel playerModel = new PlayerModel(p.getUniqueId().toString(), p.getPlayerListName());
         playerControl.setPlayer(playerModel);
-        if(playerControl.getByUUID() == null){
+        PlayerModel currentPlayerModel = playerControl.getByUUID();
+        if(currentPlayerModel == null){
             playerControl.insert();
             BountyController bountyControl = new BountyController();
             BountyModel bounty = new BountyModel(playerModel, 0f);
             bountyControl.setBounty(bounty);
             bountyControl.insert();
         }
-        if(!playerControl.isUpdated()){
+        if(currentPlayerModel != null && !playerControl.isUpdated()){
             playerControl.update();
         }
 

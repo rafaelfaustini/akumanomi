@@ -17,7 +17,7 @@ public class BountyDAO {
 
     private void createTable(){
         try {
-            String sql = "CREATE TABLE IF NOT EXISTS bounty ( uuid text, money real, FOREIGN KEY (uuid) references player(uuid) )";
+            String sql = "CREATE TABLE IF NOT EXISTS bounty ( uuid text PRIMARY KEY, money real, FOREIGN KEY (uuid) references player(uuid) )";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.execute();
         } catch (SQLException throwables) {

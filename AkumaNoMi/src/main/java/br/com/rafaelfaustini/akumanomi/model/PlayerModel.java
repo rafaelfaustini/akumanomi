@@ -7,10 +7,22 @@ import java.util.UUID;
 public class PlayerModel {
     private UUID uuid;
     private String nickname;
+    private AkumaNoMiModel fruit;
 
+    public PlayerModel(String _uuid, String _nickname, AkumaNoMiModel _fruit){
+        uuid = UUID.fromString(_uuid);
+        nickname = _nickname;
+        fruit = _fruit;
+    }
     public PlayerModel(String _uuid, String _nickname){
         uuid = UUID.fromString(_uuid);
         nickname = _nickname;
+        fruit = null;
+    }
+
+    public boolean isEsper(){
+        if(fruit == null) return false;
+        return true;
     }
 
     public UUID getUUID(){
@@ -18,6 +30,10 @@ public class PlayerModel {
     }
     public String getNickname(){
         return this.nickname;
+    }
+
+    public AkumaNoMiModel getFruit() {
+        return fruit;
     }
 
     public boolean equals(Object obj){
