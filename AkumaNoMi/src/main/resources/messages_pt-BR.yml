@@ -6,10 +6,10 @@ meramera:
   name: "&cMera Mera no Mi"
   description: "&4Arde como fogo"
   onEat: "&cVocê sente seu estômago queimar"
-  onFirePistol: "&cVocê concentra o fogo no formato de uma bala e atira"
+  onFireBlastJump: "&cVocê concentra o fogo em suas pernas e pula"
   skills:
     - "Nenhum"
-    - "&cPunho de fogo"
+    - "&cPulo explosivo de chamas"
 bounty:
   bountyFormat: "☠ %% - β%%"
   deleteSuccess: "&aBounty has been deleted successfully"

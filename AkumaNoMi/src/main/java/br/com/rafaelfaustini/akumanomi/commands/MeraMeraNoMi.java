@@ -8,10 +8,7 @@ import br.com.rafaelfaustini.akumanomi.model.AkumaNoMiModel;
 import br.com.rafaelfaustini.akumanomi.model.PlayerModel;
 import br.com.rafaelfaustini.akumanomi.utils.Debug;
 import br.com.rafaelfaustini.akumanomi.utils.Utils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -34,6 +31,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 import java.lang.*;
@@ -146,6 +144,16 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
         }
     }
 
+    private void fireBlastJump(Player p){
+        p.spawnParticle(Particle.CRIT_MAGIC,p.getLocation(), 1000, .2, .2, .2);
+        p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 5));
+        Vector direction = p.getLocation().getDirection();
+        p.setVelocity(direction.multiply(2));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 9));
+        p.getWorld().createExplosion(p.getLocation(), 2);
+        p.spawnParticle(Particle.LAVA,p.getLocation(), 1000, .2, .2, .2);
+
+    }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e){
@@ -177,8 +185,8 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
                                             "%d"), (expired.get(p.getUniqueId()) - System.currentTimeMillis()) / 1000));
                                 } else {
                                     if (isMeraMera(p)) {
-                                        p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("meramera.onFirePistol").toString()));
-                                        p.launchProjectile(Fireball.class);
+                                        p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("meramera.onFireBlastJump").toString()));
+                                        fireBlastJump(p);
                                         expired.put(p.getUniqueId(), System.currentTimeMillis() + 5000);
                                     }
                                 }

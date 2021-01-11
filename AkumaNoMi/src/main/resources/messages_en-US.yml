@@ -6,10 +6,10 @@ meramera:
   name: "&cMera Mera no Mi"
   description: "&4Burns as fire"
   onEat: "&cYou feel your stomach burn"
-  onFirePistol: "&cYou concentrate the fire in the shape of a bullet and shoot"
+  onFireBlastJump: "&cYou concentrate the fire in your legs and jumps away"
   skills:
     - "None"
-    - "&cFire Punch"
+    - "&cFire Blast Jump"
 bounty:
   bountyFormat: "☠ %% - β%%"
   deleteSuccess: "&aBounty has been deleted successfully"
