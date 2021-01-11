@@ -162,7 +162,7 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
             Action action = e.getAction();
             Material powerItem = Material.BLAZE_ROD;
 
-            if(p.getInventory().getItemInMainHand().getType().equals(powerItem)) {
+            if(p.getInventory().getItemInMainHand().getType().equals(powerItem) && !Esper.isOceaniteWater(p)) {
                 switch(action){
                     case RIGHT_CLICK_AIR:
                     case RIGHT_CLICK_BLOCK:

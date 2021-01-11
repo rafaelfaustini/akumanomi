@@ -1,6 +1,9 @@
 package br.com.rafaelfaustini.akumanomi.utils;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 
 import java.util.Random;
 
@@ -21,6 +24,15 @@ public class Utils {
         }
         return false;
     }
+
+    public static boolean isTouchingBlock(Material block, Player p){
+        Boolean result = false;
+        for (BlockFace face : BlockFace.values()) {
+           result = result || p.getLocation().getBlock().getRelative(face).getType() == block;
+        }
+        return result;
+    }
+
     public static void TryException(Exception e){
         System.out.println("[AkumaNoMi] There was an error loading the plugin");
         if(Debug.getEnabled()){
