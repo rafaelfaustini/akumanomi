@@ -1,11 +1,15 @@
 akumanomi:
   eatTwice: "&l&6Will your body resist so much power ?"
   insufficientPermissions: "&cYou do not have permission to execute this command"
+  cooldown: "&6Wait %% seconds to cast this skill again"
 meramera:
   name: "&cMera Mera no Mi"
   description: "&4Burns as fire"
   onEat: "&cYou feel your stomach burn"
   onFirePistol: "&cYou concentrate the fire in the shape of a bullet and shoot"
+  skills:
+    - "None"
+    - "&cFire Punch"
 bounty:
   bountyFormat: "☠ %% - β%%"
   deleteSuccess: "&aBounty has been deleted successfully"

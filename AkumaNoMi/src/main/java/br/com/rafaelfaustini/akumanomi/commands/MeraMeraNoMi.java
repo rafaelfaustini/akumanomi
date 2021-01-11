@@ -35,8 +35,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.lang.*;
 
 
 import static br.com.rafaelfaustini.akumanomi.utils.Utils.MessageText;
@@ -46,6 +46,16 @@ import static br.com.rafaelfaustini.akumanomi.utils.Utils.rollD;
 public class MeraMeraNoMi implements CommandExecutor, Listener {
     private AkumaNoMi plugin = AkumaNoMi.getPlugin(AkumaNoMi.class);
     private final String name = "Mera Mera No Mi";
+    HashMap<UUID, Long> expired = new HashMap<UUID, Long>();
+    List<String> skills = new ArrayList<String>();
+    HashMap<UUID, Integer> currentSkill = new HashMap<UUID, Integer>();
+    public MeraMeraNoMi(){
+        try {
+           skills = plugin.messagesConfig.getConfig().getStringList("meramera.skills");
+        } catch (Exception e){
+            Utils.TryException(e);
+        }
+    }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
                 Player player = (Player) sender;
@@ -136,16 +146,48 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
         }
     }
 
+
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e){
-        Player p = e.getPlayer();
-        Action action = e.getAction();
-        ItemStack powerItem = new ItemStack(Material.BLAZE_ROD);
-        if ((action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) && p.getInventory().getItemInMainHand().equals(powerItem)) {
-            if(isMeraMera(p)) {
-                p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("meramera.onFirePistol").toString()));
-                p.launchProjectile(Fireball.class);
+        try {
+            Player p = e.getPlayer();
+            Action action = e.getAction();
+            Material powerItem = Material.BLAZE_ROD;
+
+            if(p.getInventory().getItemInMainHand().getType().equals(powerItem)) {
+                switch(action){
+                    case RIGHT_CLICK_AIR:
+                    case RIGHT_CLICK_BLOCK:
+                        if(currentSkill.get(p.getUniqueId()) != null){
+                            p.sendMessage(MessageText(skills.get((currentSkill.get(p.getUniqueId()) + 1) % skills.size())));
+                            currentSkill.put(p.getUniqueId(), (currentSkill.get(p.getUniqueId()) + 1) % skills.size());
+                        } else {
+                            p.sendMessage(MessageText(skills.get(skills.size()-1)));
+                            currentSkill.put(p.getUniqueId(), skills.size()-1);
+                        }
+                        break;
+                    case LEFT_CLICK_AIR:
+                    case LEFT_CLICK_BLOCK:
+                        switch(currentSkill.get(p.getUniqueId())){
+                            case 0:
+                                break;
+                            case 1:
+                                if (expired.containsKey(p.getUniqueId()) && System.currentTimeMillis() < expired.get(p.getUniqueId())) {
+                                    p.sendMessage(String.format(MessageText(plugin.messagesConfig.getConfig().get("akumanomi.cooldown").toString(),
+                                            "%d"), (expired.get(p.getUniqueId()) - System.currentTimeMillis()) / 1000));
+                                } else {
+                                    if (isMeraMera(p)) {
+                                        p.sendMessage(MessageText(plugin.messagesConfig.getConfig().get("meramera.onFirePistol").toString()));
+                                        p.launchProjectile(Fireball.class);
+                                        expired.put(p.getUniqueId(), System.currentTimeMillis() + 5000);
+                                    }
+                                }
+                                break;
+                        }
+                }
             }
+        } catch (Exception ex){
+            Utils.TryException(ex);
         }
     }
 
