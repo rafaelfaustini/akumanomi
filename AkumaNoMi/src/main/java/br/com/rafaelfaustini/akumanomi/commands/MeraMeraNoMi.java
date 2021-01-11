@@ -19,9 +19,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -97,7 +99,7 @@ public class MeraMeraNoMi implements CommandExecutor, Listener {
     }
 
     @EventHandler
-    public void onPlayerDamage(EntityDamageEvent e) {
+    public void onPlayerDamage(EntityDamageByEntityEvent e) {
         if(e.getEntity().getType() == EntityType.PLAYER){
             Player p = (Player) e.getEntity();
             if(isMeraMera(p)) {
