@@ -24,9 +24,12 @@ public class Esper implements Listener {
         PlayerModel player = playerControl.getByUUID(p.getUniqueId());
         return player.isEsper();
     }
+    private static Boolean isWater(Player p){
+        return p.getLocation().getBlock().getType() == Material.WATER && p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WATER || p.getLocation().getBlock().getRelative(BlockFace.UP).getType() == Material.WATER;
+    }
     public static Boolean isOceaniteWater(Player p){
-       boolean result = p.getLocation().getBlock().getType() == Material.WATER && p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WATER || p.getLocation().getBlock().getRelative(BlockFace.UP).getType() == Material.WATER;
-       List<Material> oceanite = Arrays.asList( Material.PRISMARINE, Material.PRISMARINE_BRICKS, Material.IRON_BARS);
+       boolean result = isWater(p);
+       List<Material> oceanite = Arrays.asList( Material.PRISMARINE, Material.PRISMARINE_BRICKS, Material.IRON_BARS, Material.KELP_PLANT, Material.KELP);
         for (Material block: oceanite) {
             result = result || Utils.isTouchingBlock(block, p);
         }
@@ -38,13 +41,12 @@ public class Esper implements Listener {
         Bukkit.getScheduler().runTaskLater(plugin, task -> {
             if (isOceaniteWater(player)) {
                 if(isEsper(player)) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 3));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10000, 7));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 10000, 14));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 1000, 7));
-
-                    Vector vector = new Vector(0, -3, 0);
-                    player.setVelocity(vector.multiply(1));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10000, 10));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 1000, 10));
+                    if(isWater(player)) {
+                        Vector vector = new Vector(0, -3, 0);
+                        player.setVelocity(vector.multiply(1));
+                    }
                 }
             }
         }, 7L);
