@@ -1,6 +1,6 @@
 <h1 align="center">Akuma no Mi</h1>
 
-  <p align="center">Spigot plugin for 1.16.4 inspired in One Piece</p>
+  <p align="center">Spigot plugin for 1.19.1 inspired in One Piece</p>
 
   <p align="center">
      <a href="https://github.com/rafaelfaustini/akumanomi/issues">
