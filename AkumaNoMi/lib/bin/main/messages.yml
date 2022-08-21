@@ -1,0 +1,5 @@
+Startup: "Plugin activated successfully."
+FruitPowerStart: "Ewww..."
+FruitPowerEnd: "Your powers fade away..."
+FruitValid: "&aFruit is valid."
+FruitInvalid: "&cFruit is invalid"
